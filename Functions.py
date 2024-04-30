@@ -13,12 +13,11 @@ def calculate_probabilities(string):
     
     return probabilities
 
-# Example usage
-input_string = "hello"
-probabilities = calculate_probabilities(input_string)
-print("Probabilities of occurrence for each character:", probabilities)
-
-
+if __name__ == "__main__":
+  # Example usage
+  input_string = "hello"
+  probabilities = calculate_probabilities(input_string)
+  print("Probabilities of occurrence for each character:", probabilities)
 
 
 ##Avg length
@@ -45,14 +44,13 @@ def calculate_average_length(symbol_dict, probabilities):
 
   return total_length
 
-# Example usage
-symbol_dict = {'a': '1', 'b': '10', 'c': '111'}
-string = "aabcaacbab"  # Example string for probability calculation
-probabilities = calculate_probabilities(string)
-average_length = calculate_average_length(symbol_dict, probabilities)
-print("Average length of characters (weighted by probabilities):", average_length)
-
-
+if __name__ == "__main__":
+  # Example usage
+  symbol_dict = {'a': '1', 'b': '10', 'c': '111'}
+  string = "aabcaacbab"  # Example string for probability calculation
+  probabilities = calculate_probabilities(string)
+  average_length = calculate_average_length(symbol_dict, probabilities)
+  print("Average length of characters (weighted by probabilities):", average_length)
 
 
 ##Entropy
@@ -77,13 +75,11 @@ def calculate_entropy(string):
 
   return entropy
 
-# Example usage
-input_string = "aabbcaacbab"
-entropy = calculate_entropy(input_string)
-print("Entropy of the string:", entropy)
-
-
-
+if __name__ == "__main__":
+  # Example usage
+  input_string = "aabbcaacbab"
+  entropy = calculate_entropy(input_string)
+  print("Entropy of the string:", entropy)
 
 
 ## no. of bits Before
@@ -101,10 +97,6 @@ def calculate_bits_before(string):
     return num_bits
 
 
-
-
-
-
 ## no. of bits After
 ### bits After for LZW
 def calculate_bits_for_list(numbers):
@@ -119,14 +111,11 @@ def calculate_bits_for_list(numbers):
     
     return total_bits
 
-# Example usage
-numbers = [10, 20, 30, 40, 50]
-num_bits = calculate_bits_for_list(numbers)
-print("Number of bits After:", num_bits)
-
-
-
-
+if __name__ == "__main__":
+  # Example usage
+  numbers = [10, 20, 30, 40, 50]
+  num_bits = calculate_bits_for_list(numbers)
+  print("Number of bits After:", num_bits)
 
 
 ### bits After for RLE
@@ -147,8 +136,9 @@ def calculate_bits_for_array(array):
 
   return key_lengths, value_bit_reqs, total_bits
 
-# Example usage
-my_array = [['0', 6], ['1', 14], ['0', 13], ['1', 9]]
-key_lengths, value_bit_reqs, num_bits = calculate_bits_for_array(my_array)
-print("Number of bits After:", num_bits)
+if __name__ == "__main__":
+  # Example usage
+  my_array = [['0', 6], ['1', 14], ['0', 13], ['1', 9]]
+  key_lengths, value_bit_reqs, num_bits = calculate_bits_for_array(my_array)
+  print("Number of bits After:", num_bits)
 
