@@ -142,3 +142,11 @@ if __name__ == "__main__":
   key_lengths, value_bit_reqs, num_bits = calculate_bits_for_array(my_array)
   print("Number of bits After:", num_bits)
 
+# for arithmetic
+def calculate_bits_after (l , h):
+    result = math.ceil(math.log2(1 / (h - l))) + 1
+    return result
+# for arithmetic
+def calculate_avg_length (entropy , no_of_symbols ):
+    avg_len = entropy + (2/ no_of_symbols)
+    return avg_len
