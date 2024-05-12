@@ -146,6 +146,7 @@ if __name__ == "__main__":
 def calculate_bits_after (l , h):
     result = math.ceil(math.log2(1 / (h - l))) + 1
     return result
+
 # for arithmetic
 def calculate_avg_length (entropy , no_of_symbols ):
     avg_len = entropy + (2/ no_of_symbols)
