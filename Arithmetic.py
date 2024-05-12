@@ -1,5 +1,4 @@
-from collections import Counter
-import math
+import Functions as fn
 
 class ArithmeticEncoding:
     """
@@ -25,7 +24,7 @@ def get_encoded_value(encoder):
     last_stage_max = max(last_stage_values)
 
     # Computing the encoded value representing the entire message
-    return (last_stage_min + last_stage_max) / 2
+    return last_stage_min, last_stage_max, (last_stage_min + last_stage_max) / 2
     
 
 # This function processes a stage in the encoding process
@@ -80,72 +79,33 @@ def encode(msg, probability_table):
     encoder.append(stage_probs)
 
     # Computing the single value representation of the entire encoded message
-    encoded_msg = get_encoded_value(encoder)
+    last_stage_min, last_stage_max, encoded_msg = get_encoded_value(encoder)
 
-    # Returning the encoder (list of stages) and the encoded message
-    return encoder, encoded_msg
-
-def calculate_probabilities(string):
-    # Count the frequency of each character in the string
-    frequency = Counter(string)
+    no_of_symbols = len(msg)
+    entropy = fn.calculate_entropy(msg)
+    bits_before= fn.calculate_bits_before(msg)
+    bits_after = fn.calculate_bits_after (last_stage_min , last_stage_max)
+    avg_len = fn.calculate_avg_length (entropy , no_of_symbols )
     
-    # Calculate the total number of characters in the string
-    total_characters = len(string)
-    
-    # Calculate the probability of occurrence for each character
-    probabilities = {char: count / total_characters for char, count in frequency.items()}
-    
-    return probabilities
 
-def calculate_entropy(string):
-  """Calculates the entropy of a string.
-
-  Args:
-      string: The string to calculate the entropy for.
-
-  Returns:
-      The entropy of the string.
-  """
-
-  # Calculate the probabilities of occurrence for each character
-  probabilities = calculate_probabilities(msg)
-
-  # Calculate the entropy
-  entropy = 0
-  for probability in probabilities.values():
-    if probability > 0:  # Avoid log(0) errors
-      entropy -= probability * math.log2(probability)
-
-  return entropy
-
-def calculate_bits_before(string):
-    # Count the number of characters in the string
-    num_characters = len(string)
-    
-    # Check if the string consists only of zeros and ones
-    if all(char in '01' for char in string):
-        # If yes, each character represents a single bit
-        num_bits = num_characters
-    else:
-        # If the string contains other characters, each character is represented using 8 bits (1 byte)
-        num_bits = num_characters * 8
-    return num_bits
-
+    output = {
+        'result': encoded_msg,
+        'bits_before': bits_before,
+        'bits_after': bits_after,
+        'cr': bits_before/bits_after,
+        'entropy': entropy,
+        'avg_len': avg_len,
+        'efficiency': (entropy/avg_len)*100,
+    }
+    return  output
 
 # Example usage
+probabilities = fn.calculate_probabilities('abbaabbccccccddd')
 
-# Get user input for the message to encode
-msg = input("Enter your message to encode here: ")
-probabilities = calculate_probabilities(msg)
+# Encode the message and get the output dictionary
+output = encode('abbaabbccccccddd', probabilities)
 
-# Encode the message
-encoder, encoded_msg = encode(msg, probabilities)
-entropy = calculate_entropy(msg)
-bits_before = calculate_bits_before(msg)
+# Print the output dictionary
+print(output)
 
-print("Probabilities of occurrence for each character:", probabilities)
-print("Encoder:", encoder)
-print("Original Message:", msg)
-print("Encoded message:", encoded_msg)
-print("Entropy of the string:", entropy)
-print("No of bits before:", bits_before)
+
