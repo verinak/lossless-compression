@@ -39,13 +39,73 @@ def golomb(n,m):
     bits_after=len(golocode)
     Compression_ratio=bits_before/bits_after
 
-    return {
+    result = { 
             "result": golocode,
             "bits_before": bits_before,
             "bits_after": bits_after,
             "cr": Compression_ratio,
         }
 
+    return result
 
-x=golomb(21,5)
-#print(x)
+
+# x=golomb(42,6)
+# print(x)
+
+#######################handel if user entered binary(tari2et el dr)####################################################################
+
+def binary_to_list(binary_string): ## binary to list of numbers
+    encoded_message = []
+
+    # start counting with the first charcter in the message
+    letter = binary_string[0]
+    count = 0
+    # iterate over each character in the message
+    for char in binary_string:
+        # if character is found at current index, count++
+        if(char == letter):
+            count = count + 1
+        # else (different character found at current index)
+        # append current count to encoded message
+        # then start counting the new character
+        else:
+            encoded_message.append(count)
+            letter = char
+            count = 1
+
+    encoded_message.append(count)        
+    # append count of the last character to encoded message
+    return encoded_message
+
+# Example usage
+# binary_string = "00000000100000000000100001111111111111111000000001111111010000000011"
+# result_list = binary_to_list(binary_string)
+# print(result_list)  
+
+ 
+def calculate_golomb_and_stats(binary_string):   #calculate golumb for list of numbers , di elfunction eli hanadiha lw user da5al binary 
+    m_list = []
+    result_list = binary_to_list(binary_string)
+    bits_before_total = 0
+    bits_after_total = 0
+    
+    for num in result_list:
+        m_list.append(round(math.sqrt(num)))
+    
+    golomb_results = []
+    for i in range(len(result_list)):
+        golocode = golomb(result_list[i], m_list[i])["result"]
+        #print(golocode)
+        bits_before_total = len(binary_string)  # Total bits before compression
+        bits_after = len(golocode)  # Total bits after compression
+        bits_after_total += bits_after
+        golomb_results.append(golocode)
+    
+    compression_ratio = bits_before_total / bits_after_total
+    
+    return {
+        "result": ''.join(golomb_results),
+        "bits_before": bits_before_total,
+        "bits_after": bits_after_total,
+        "cr": compression_ratio
+    }
