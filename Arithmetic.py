@@ -38,7 +38,7 @@ def process_stage(probability_table, stage_min, stage_max):
     """
     # Dictionary to store probabilities for each term in the stage
     stage_probs = {}
-    # Calculating the domain of the stage
+    # Calculating the range of the stage
     stage_domain = stage_max - stage_min
     # Iterating through the probability table
     for term_idx in range(len(probability_table.items())):
