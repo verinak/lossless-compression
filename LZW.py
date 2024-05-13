@@ -19,9 +19,9 @@ def lzw_compress(text):
     if w:
         compressed_text.append(dictionary[w])
 
-    # Print the dictionary
-    for key, value in dictionary.items():
-        print(key, ":", value)
+    # # Print the dictionary
+    # for key, value in dictionary.items():
+    #     print(key, ":", value)
 
     # Calculate probabilities
     total_codes = len(compressed_text)
@@ -52,9 +52,10 @@ def lzw_compress(text):
 
 
 #example
-user_input = "ABAABABBAABAABAAAABABBBBBBBB"
-results = lzw_compress(user_input)
-print("Results:", results)
+if __name__ == "__main__":
+    user_input = "ABAABABBAABAABAAAABABBBBBBBB"
+    results = lzw_compress(user_input)
+    print("Results:", results)
 
 
 

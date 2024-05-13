@@ -60,9 +60,9 @@ def compression_with_huffman(message):
 
     tree = build_huffman_tree(message)
     mapping = build_huffman_mapping(tree)
-    print(mapping)
+    # print(mapping)
     array_mapping=mapping_to_2d_array(mapping)
-    print(array_mapping)
+    # print(array_mapping)
 
 
     prob_table=Functions.calculate_probabilities(message)
@@ -89,6 +89,8 @@ def compression_with_huffman(message):
             "efficiency": efficiency,
             "prob_dict": prob_table
         }
-v=compression_with_huffman("aaaabbccdf")
-#print(v)
+
+if __name__ == "__main__":
+    v=compression_with_huffman("aaaabbccdf")
+    print(v)
 
