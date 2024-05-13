@@ -1,4 +1,8 @@
 import Functions as fn
+from decimal import Decimal, getcontext
+
+# Set the precision for Decimal
+getcontext().prec = 120  # Set precision to a value that suits your needs
 
 class ArithmeticEncoding:
     """
@@ -42,7 +46,7 @@ def process_stage(probability_table, stage_min, stage_max):
         term = list(probability_table.keys())[term_idx]
         term_prob = probability_table[term]
         # Calculating cumulative probability for each term
-        cum_prob = term_prob * stage_domain + stage_min
+        cum_prob = Decimal(term_prob) * Decimal(stage_domain) + Decimal(stage_min)
         stage_probs[term] = [stage_min, cum_prob]
         stage_min = cum_prob
     return stage_probs
@@ -89,7 +93,7 @@ def encode(msg, probability_table):
     
 
     output = {
-        'result': encoded_msg,
+        'result': "{:.16f}".format(encoded_msg),
         'bits_before': bits_before,
         'bits_after': bits_after,
         'cr': bits_before/bits_after,
@@ -99,13 +103,17 @@ def encode(msg, probability_table):
     }
     return  output
 
-# Example usage
-probabilities = fn.calculate_probabilities('abbaabbccccccddd')
+if __name__ == "__main__":
+    
+    # Example usage
+    message = 'hanbame bame pin nunbushin bitcheoreom.. dalbiche banhae pin haiyan kkotcheoreom.. - oneus luna'
+    probabilities = fn.calculate_probabilities(message)
+    print(len(message))
 
-# Encode the message and get the output dictionary
-output = encode('abbaabbccccccddd', probabilities)
+    # Encode the message and get the output dictionary
+    output = encode(message, probabilities)
 
-# Print the output dictionary
-print(output)
+    # Print the output dictionary
+    print(output)
 
 
