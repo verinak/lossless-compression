@@ -30,21 +30,28 @@ class CompressionResultsDialog(QDialog):
             techniques.append(('Huffman Encoding', self.huffman_encoding))
             techniques.append(('Arithmetic Encoding', self.arithmetic_encoding))
             techniques.append(('LZW Encoding', self.lzw_encoding))
+            techniques.append(('Run Length Encoding', self.run_length_encoding))
 
         for name, func in techniques:
             compression_ratio, bits_after, encoded_message, efficiency, avg_len = func(input_text)
-
             if name == "Golomb Encoding":
-                efficiency = "Not Supported"
-                avg_len = "Not Supported"
-                results_text = (
+                if all(c in '01' for c in input_text):   
+                    results_text = (
                     f"<b><span style='font-size:14pt;'>{name}</span></b><br><br>"
                     f"Compression Ratio  {compression_ratio:.2f}<br>"
                     f"Bits After Encoding  {bits_after} bits<br>"
                     f"Encoded Message  {encoded_message}<br>"
-                    f"Efficiency  {efficiency}<br>"
-                    f"Average Length  {avg_len}<br>"
+                    f"Efficiency  {efficiency:.2f}%<br>"
+                    f"Average Length  {avg_len} bits<br>"
                 )
+                else:
+                    results_text = (
+                        f"<b><span style='font-size:14pt;'>{name}</span></b><br><br>"
+                        f"Compression Ratio  {compression_ratio:.2f}<br>"
+                        f"Bits After Encoding  {bits_after} bits<br>"
+                        f"Encoded Message  {encoded_message}<br>"
+                        f"Average Length  {avg_len} bits<br>"
+                        )
             else:
                 results_text = (
                 f"<b><span style='font-size:14pt;'>{name}</span></b><br><br>"  # Applying HTML to make name bold and larger
@@ -131,21 +138,20 @@ class CompressionResultsDialog(QDialog):
     # Checking if the input text is binary (consists of 0s and 1s only)
         if all(c in '01' for c in input_text):
             results = calculate_golomb_and_stats(input_text)
-            return (results['cr'], results['bits_after'], results['result'], "Not Supported", "Not Supported")
+            return (results['cr'], results['bits_after'], results['result'], results['efficiency'], results['bits_after'])
         else:
             decimal_value = int(input_text)
             m = round(math.sqrt(decimal_value)) if decimal_value > 0 else 1
 
-    # Calculate Golomb encoding using the imported function
+    
         result = golomb(decimal_value, m)
         encoded_message = result['result']
         bits_before = result['bits_before']
         bits_after = result['bits_after']
         compression_ratio = result['cr']
-        efficiency = "Not Supported"
-        avg_len = "Not Supported"
+        avg_len = result['bits_after']
         
-        return compression_ratio, bits_after, encoded_message, efficiency, avg_len
+        return compression_ratio, bits_after, encoded_message, avg_len
 
 
 
