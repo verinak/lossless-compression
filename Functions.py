@@ -140,7 +140,7 @@ if __name__ == "__main__":
   # Example usage
   my_array = [['0', 6], ['1', 14], ['0', 13], ['1', 9]]
   key_lengths, value_bit_reqs, num_bits = calculate_bits_for_array(my_array)
-  print("Number of bits After:", num_bits)
+  # print("Number of bits After:", num_bits)
 
 # for arithmetic
 def calculate_bits_after (l , h):
@@ -151,3 +151,17 @@ def calculate_bits_after (l , h):
 def calculate_avg_length (entropy , no_of_symbols ):
     avg_len = entropy + (2/ no_of_symbols)
     return avg_len
+
+# for RLE
+def average_length_RLE(vectors, bits_after):
+  vector_size = bits_after/len(vectors)
+  keys = []
+  avg_len = 0
+  for vector in vectors:
+    count = vector[1]
+    keys.append(vector[0])
+    avg_len += vector_size/count
+  keys = set(keys)
+  print(keys)
+  avg_len /= len(keys)
+  return avg_len

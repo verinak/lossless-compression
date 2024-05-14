@@ -26,7 +26,7 @@ def run_length_encoding(message):
     bits_before = fn.calculate_bits_before(message)
     bits_after = fn.calculate_bits_for_array(encoded_message)[2]
     entropy = fn.calculate_entropy(message)
-    avg_len = bits_after/len(message) # fi habal hena bs ba3den ba2a
+    avg_len = fn.average_length_RLE(encoded_message, bits_after)
     output = {
         'result': encoded_message,
         'bits_before': bits_before,
@@ -42,5 +42,7 @@ def run_length_encoding(message):
 if __name__ == "__main__":
     print(run_length_encoding('aaaabbccccccddd'))
     print(run_length_encoding('000000111111111111110000000000000111111111'))
+    print(run_length_encoding('abc'))
+    print(run_length_encoding('abcabc'))
 
 
