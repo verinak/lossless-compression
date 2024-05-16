@@ -5,11 +5,7 @@ def golomb_cod(x,m):
     c = int(math.ceil(math.log(m,2)))
     remin = x % m
     quo =int(math.floor(x / m))
-    #print "quo is",quo
-    #print "reminder",remin
-    #print "c",c
     div = int(math.pow(2,c) - m)
-    #print "div",div
     first = ""
     for i in range(quo):
         first = first + "1"
@@ -20,6 +16,13 @@ def golomb_cod(x,m):
         a = "{0:0" + str(b) + "b}"
         #print "1",a.format(remin)
         bi = a.format(remin)
+        
+    elif(remin==div):
+        b = c
+        a = "{0:0" + str(b) + "b}"
+        #print "2",a.format(remin+div)
+        bi = a.format(remin+div)
+        
     else:
         b = c
         a = "{0:0" + str(b) + "b}"
@@ -27,7 +30,6 @@ def golomb_cod(x,m):
         bi = a.format(remin+div)
 
     final = first + "0" +str(bi)
-    #print "final",final
     return final
 
 
@@ -75,13 +77,7 @@ def binary_to_list(binary_string): ## binary to list of numbers
 
     encoded_message.append(count)        
     # append count of the last character to encoded message
-    return encoded_message
-
-# Example usage
-# binary_string = "00000000100000000000100001111111111111111000000001111111010000000011"
-# result_list = binary_to_list(binary_string)
-# print(result_list)  
-
+    return encoded_message 
  
 def calculate_golomb_and_stats(binary_string):   #calculate golumb for list of numbers , di elfunction eli hanadiha lw user da5al binary 
     m_list = []
@@ -108,5 +104,5 @@ def calculate_golomb_and_stats(binary_string):   #calculate golumb for list of n
         "bits_before": bits_before_total,
         "bits_after": bits_after_total,
         "cr": compression_ratio,
-        "efficiency": (bits_after_total/bits_before_total)*100
+       
     }
