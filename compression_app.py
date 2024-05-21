@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QVBoxLayout, QWidget, QLabel, QLineEdit
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QVBoxLayout, QWidget, QLabel, QLineEdit, QMessageBox
 from statistics_window import StatisticsDialog
 from output_window import CompressionResultsDialog
 
@@ -32,15 +32,27 @@ class TextCompressionApp(QMainWindow):
 
 
     def show_statistics(self):
+        # check for empty message
+        if(not self.text_input.toPlainText().strip()):
+            QMessageBox.warning(self, 'Invalid Input', 'Please enter a message to compress.')
+            return
         # Check if the dialog is already open
-        if not self.statistics_dialog or not self.statistics_dialog.isVisible():
-            self.statistics_dialog = StatisticsDialog(self, self.text_input.toPlainText())
-            self.statistics_dialog.show()
+        if self.statistics_dialog and self.statistics_dialog.isVisible():
+            self.statistics_dialog.close()
+        # open dialog
+        self.statistics_dialog = StatisticsDialog(self, self.text_input.toPlainText())
+        self.statistics_dialog.show()
 
 
     def show_compression_results(self):
+        # check for empty message
+        if(not self.text_input.toPlainText().strip()):
+            QMessageBox.warning(self, 'Invalid Input', 'Please enter a message to compress.')
+            return
         # Check if the dialog is already open
-        if not self.compression_results_dialog or not self.compression_results_dialog.isVisible():
-            self.compression_results_dialog = CompressionResultsDialog(self, self.text_input.toPlainText())
-            self.compression_results_dialog.show()
+        if self.compression_results_dialog and self.compression_results_dialog.isVisible():
+            self.compression_results_dialog.close()
+        # open dialog
+        self.compression_results_dialog = CompressionResultsDialog(self, self.text_input.toPlainText())
+        self.compression_results_dialog.show()
 
