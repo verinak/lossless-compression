@@ -5,8 +5,22 @@ from PyQt5.QtGui import QIcon
 from compression_app import TextCompressionApp
 
 app = QApplication(sys.argv)
-with open(r"stylesheets/aqua_dark.css") as style:
-    my_style = style.read()
+my_style = """
+    * {
+        font-family: 'Verdana';
+        font-size: 16px;
+        padding:5px;
+    }
+    QTextEdit {
+        border: 1px solid #000000;
+        color: #eb8e15;
+        font-weight: bold;
+    }
+    QLabel {
+    }
+    """
+with open(r"stylesheets/style_black.css") as style:
+    my_style += style.read()
 
 app.setStyleSheet(my_style)
 app.setWindowIcon(QIcon(r"media/zip2.png"))
