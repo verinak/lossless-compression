@@ -162,6 +162,6 @@ def average_length_RLE(vectors, bits_after):
     keys.append(vector[0])
     avg_len += vector_size/count
   keys = set(keys)
-  print(keys)
+  # print(keys)
   avg_len /= len(keys)
   return avg_len

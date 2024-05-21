@@ -41,7 +41,7 @@ class CompressionResultsDialog(QDialog):
                     f"Compression Ratio  {compression_ratio:.2f}<br>"
                     f"Bits After Encoding  {bits_after} bits<br>"
                     f"Encoded Message  {encoded_message}<br>"
-                    f"Efficiency  {efficiency:.2f}%<br>"
+                    # f"Efficiency  {efficiency:.2f}%<br>"
                     f"Average Length  {avg_len} bits<br>"
                 )
                 else:
@@ -138,7 +138,7 @@ class CompressionResultsDialog(QDialog):
     # Checking if the input text is binary (consists of 0s and 1s only)
         if all(c in '01' for c in input_text):
             results = calculate_golomb_and_stats(input_text)
-            return (results['cr'], results['bits_after'], results['result'], results['efficiency'], results['bits_after'])
+            return (results['cr'], results['bits_after'], results['result'], 'NA', results['bits_after'])
         else:
             decimal_value = int(input_text)
             m = round(math.sqrt(decimal_value)) if decimal_value > 0 else 1
@@ -151,7 +151,7 @@ class CompressionResultsDialog(QDialog):
         compression_ratio = result['cr']
         avg_len = result['bits_after']
         
-        return compression_ratio, bits_after, encoded_message, avg_len
+        return compression_ratio, bits_after, encoded_message, 'NA', avg_len
 
 
 
